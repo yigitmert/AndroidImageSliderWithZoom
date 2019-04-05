@@ -7,8 +7,8 @@ import com.nineoldandroids.view.ViewHelper;
 import com.yigitmertdemir.imagesliderwithzoomlibrary.R;
 
 /**
- * A demo class to show how to use {@link com.daimajia.slider.library.Animations.BaseAnimationInterface}
- * to make  your custom animation in {@link com.daimajia.slider.library.Tricks.ViewPagerEx.PageTransformer} action.
+ * A demo class to show how to use {@link com.yigitmertdemir.imagesliderwithzoomlibrary.Animations.BaseAnimationInterface}
+ * to make  your custom animation in {@link com.yigitmertdemir.imagesliderwithzoomlibrary.Tricks.ViewPagerEx.PageTransformer} action.
  */
 public class DescriptionAnimation implements BaseAnimationInterface {
 

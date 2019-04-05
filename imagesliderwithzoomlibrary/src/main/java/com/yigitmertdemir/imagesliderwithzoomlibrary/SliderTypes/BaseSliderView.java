@@ -15,8 +15,8 @@ import java.io.File;
 /**
  * When you want to make your own slider view, you must extends from this class.
  * BaseSliderView provides some useful methods.
- * I provide two example: {@link com.daimajia.slider.library.SliderTypes.DefaultSliderView} and
- * {@link com.daimajia.slider.library.SliderTypes.TextSliderView}
+ * I provide two example: {@link com.yigitmertdemir.imagesliderwithzoomlibrary.SliderTypes.DefaultSliderView} and
+ * {@link com.yigitmertdemir.imagesliderwithzoomlibrary.SliderTypes.TextSliderView}
  * if you want to show progressbar, you just need to set a progressbar id as @+id/loading_bar.
  */
 public abstract class BaseSliderView {

@@ -4,7 +4,7 @@ import android.view.View;
 
 /**
  * This interface gives you chance to inject your own animation or do something when the
- * {@link com.daimajia.slider.library.Tricks.ViewPagerEx} animation (PagerTransformer) starts or ends.
+ * {@link com.yigitmertdemir.imagesliderwithzoomlibrary.Tricks.ViewPagerEx} animation (PagerTransformer) starts or ends.
  *
  *
  * There are two items you have to know. The first item is the slider you are dragging. This item
@@ -15,7 +15,7 @@ import android.view.View;
  *
  * When you finish drag, the onCurrentItemDisappear and onNextItemAppear will be invoked.
  *
- * You can see a demo class {@link com.daimajia.slider.library.Animations.DescriptionAnimation},
+ * You can see a demo class {@link com.yigitmertdemir.imagesliderwithzoomlibrary.Animations.DescriptionAnimation},
  * this class gives the description text an animation.
  */
 public interface BaseAnimationInterface {

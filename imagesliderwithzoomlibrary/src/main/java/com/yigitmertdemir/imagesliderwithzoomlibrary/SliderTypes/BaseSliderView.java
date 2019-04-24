@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -261,17 +262,21 @@ public abstract class BaseSliderView {
         rqForBitMap.into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                Log.d("********", "onBitmapLoaded");
+                Log.d("********", "BitMap Height : " + bitmap.getHeight());
                 mBitmap = bitmap;
             }
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-
+                Log.d("********", "onBitmapFailed");
+                Log.d("********", "errorDrawable : " + errorDrawable.toString());
             }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                Log.d("********", "onPrepareLoad");
+                Log.d("********", "errorDrawable : " + placeHolderDrawable.toString());
             }
         });
 

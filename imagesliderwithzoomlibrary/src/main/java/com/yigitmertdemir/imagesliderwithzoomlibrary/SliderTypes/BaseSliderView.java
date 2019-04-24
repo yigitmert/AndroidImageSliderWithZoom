@@ -222,8 +222,10 @@ public abstract class BaseSliderView {
 
         Picasso p = (mPicasso != null) ? mPicasso : Picasso.with(mContext);
         RequestCreator rq = null;
+        RequestCreator rqForBitMap = null;
         if(mUrl!=null){
             rq = p.load(mUrl);
+            rqForBitMap = p.load(mUrl);
         }else if(mFile != null){
             rq = p.load(mFile);
         }else if(mRes != 0){
@@ -256,7 +258,7 @@ public abstract class BaseSliderView {
                 break;
         }
 
-        rq.into(new Target() {
+        rqForBitMap.into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 mBitmap = bitmap;

@@ -270,13 +270,13 @@ public abstract class BaseSliderView {
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
                 Log.d("********", "onBitmapFailed");
-                Log.d("********", "errorDrawable : " + errorDrawable.toString());
+                //Log.d("********", "errorDrawable : " + errorDrawable.toString());
             }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
                 Log.d("********", "onPrepareLoad");
-                Log.d("********", "errorDrawable : " + placeHolderDrawable.toString());
+                //Log.d("********", "errorDrawable : " + placeHolderDrawable.toString());
             }
         });
 

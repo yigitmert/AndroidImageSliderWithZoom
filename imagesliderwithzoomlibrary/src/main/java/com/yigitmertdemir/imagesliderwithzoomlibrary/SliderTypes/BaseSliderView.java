@@ -223,10 +223,8 @@ public abstract class BaseSliderView {
 
         Picasso p = (mPicasso != null) ? mPicasso : Picasso.with(mContext);
         RequestCreator rq = null;
-        RequestCreator rqForBitMap = null;
         if(mUrl!=null){
             rq = p.load(mUrl);
-            rqForBitMap = p.load(mUrl);
         }else if(mFile != null){
             rq = p.load(mFile);
         }else if(mRes != 0){
@@ -258,27 +256,6 @@ public abstract class BaseSliderView {
                 rq.fit().centerInside();
                 break;
         }
-
-        rqForBitMap.into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Log.d("********", "onBitmapLoaded");
-                Log.d("********", "BitMap Height : " + bitmap.getHeight());
-                mBitmap = bitmap;
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                Log.d("********", "onBitmapFailed");
-                //Log.d("********", "errorDrawable : " + errorDrawable.toString());
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                Log.d("********", "onPrepareLoad");
-                //Log.d("********", "errorDrawable : " + placeHolderDrawable.toString());
-            }
-        });
 
         rq.into(targetImageView,new Callback() {
             @Override

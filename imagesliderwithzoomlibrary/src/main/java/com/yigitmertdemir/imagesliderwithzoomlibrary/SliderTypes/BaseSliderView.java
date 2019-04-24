@@ -1,6 +1,8 @@
 package com.yigitmertdemir.imagesliderwithzoomlibrary.SliderTypes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Target;
 import com.yigitmertdemir.imagesliderwithzoomlibrary.R;
 
 import java.io.File;
@@ -49,10 +52,20 @@ public abstract class BaseSliderView {
 
     private Picasso mPicasso;
 
+    private Bitmap mBitmap;
+
     /**
      * Scale type of the image.
      */
     private ScaleType mScaleType = ScaleType.Fit;
+
+    public Bitmap getmBitmap() {
+        return mBitmap;
+    }
+
+    public void setmBitmap(Bitmap mBitmap) {
+        this.mBitmap = mBitmap;
+    }
 
     public enum ScaleType{
         CenterCrop, CenterInside, Fit, FitCenterCrop
@@ -242,6 +255,23 @@ public abstract class BaseSliderView {
                 rq.fit().centerInside();
                 break;
         }
+
+        rq.into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                mBitmap = bitmap;
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
 
         rq.into(targetImageView,new Callback() {
             @Override

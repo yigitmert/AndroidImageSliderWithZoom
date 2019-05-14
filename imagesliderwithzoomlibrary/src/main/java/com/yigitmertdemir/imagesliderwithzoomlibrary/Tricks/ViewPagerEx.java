@@ -1842,51 +1842,58 @@ public class ViewPagerEx extends ViewGroup{
                 * Locally do absolute value. mLastMotionY is set to the y value
                 * of the down event.
                 */
-                final int activePointerId = mActivePointerId;
-                if (activePointerId == INVALID_POINTER) {
-                    // If we don't have a valid id, the touch down wasn't on content.
+
+                try{
+                    final int activePointerId = mActivePointerId;
+                    if (activePointerId == INVALID_POINTER) {
+                        // If we don't have a valid id, the touch down wasn't on content.
+                        break;
+                    }
+
+                    final int pointerIndex = MotionEventCompat.findPointerIndex(ev, activePointerId);
+                    final float x = MotionEventCompat.getX(ev, pointerIndex);
+                    final float dx = x - mLastMotionX;
+                    final float xDiff = Math.abs(dx);
+                    final float y = MotionEventCompat.getY(ev, pointerIndex);
+                    final float yDiff = Math.abs(y - mInitialMotionY);
+                    if (DEBUG) Log.v(TAG, "Moved x to " + x + "," + y + " diff=" + xDiff + "," + yDiff);
+
+                    if (dx != 0 && !isGutterDrag(mLastMotionX, dx) &&
+                            canScroll(this, false, (int) dx, (int) x, (int) y)) {
+                        // Nested view has scrollable area under this point. Let it be handled there.
+                        mLastMotionX = x;
+                        mLastMotionY = y;
+                        mIsUnableToDrag = true;
+                        return false;
+                    }
+                    if (xDiff > mTouchSlop && xDiff * 0.5f > yDiff) {
+                        if (DEBUG) Log.v(TAG, "Starting drag!");
+                        mIsBeingDragged = true;
+                        requestParentDisallowInterceptTouchEvent(true);
+                        setScrollState(SCROLL_STATE_DRAGGING);
+                        mLastMotionX = dx > 0 ? mInitialMotionX + mTouchSlop :
+                                mInitialMotionX - mTouchSlop;
+                        mLastMotionY = y;
+                        setScrollingCacheEnabled(true);
+                    } else if (yDiff > mTouchSlop) {
+                        // The finger has moved enough in the vertical
+                        // direction to be counted as a drag...  abort
+                        // any attempt to drag horizontally, to work correctly
+                        // with children that have scrolling containers.
+                        if (DEBUG) Log.v(TAG, "Starting unable to drag!");
+                        mIsUnableToDrag = true;
+                    }
+                    if (mIsBeingDragged) {
+                        // Scroll to follow the motion event
+                        if (performDrag(x)) {
+                            ViewCompat.postInvalidateOnAnimation(this);
+                        }
+                    }
+                }
+                catch (Exception ex){
                     break;
                 }
 
-                final int pointerIndex = MotionEventCompat.findPointerIndex(ev, activePointerId);
-                final float x = MotionEventCompat.getX(ev, pointerIndex);
-                final float dx = x - mLastMotionX;
-                final float xDiff = Math.abs(dx);
-                final float y = MotionEventCompat.getY(ev, pointerIndex);
-                final float yDiff = Math.abs(y - mInitialMotionY);
-                if (DEBUG) Log.v(TAG, "Moved x to " + x + "," + y + " diff=" + xDiff + "," + yDiff);
-
-                if (dx != 0 && !isGutterDrag(mLastMotionX, dx) &&
-                        canScroll(this, false, (int) dx, (int) x, (int) y)) {
-                    // Nested view has scrollable area under this point. Let it be handled there.
-                    mLastMotionX = x;
-                    mLastMotionY = y;
-                    mIsUnableToDrag = true;
-                    return false;
-                }
-                if (xDiff > mTouchSlop && xDiff * 0.5f > yDiff) {
-                    if (DEBUG) Log.v(TAG, "Starting drag!");
-                    mIsBeingDragged = true;
-                    requestParentDisallowInterceptTouchEvent(true);
-                    setScrollState(SCROLL_STATE_DRAGGING);
-                    mLastMotionX = dx > 0 ? mInitialMotionX + mTouchSlop :
-                            mInitialMotionX - mTouchSlop;
-                    mLastMotionY = y;
-                    setScrollingCacheEnabled(true);
-                } else if (yDiff > mTouchSlop) {
-                    // The finger has moved enough in the vertical
-                    // direction to be counted as a drag...  abort
-                    // any attempt to drag horizontally, to work correctly
-                    // with children that have scrolling containers.
-                    if (DEBUG) Log.v(TAG, "Starting unable to drag!");
-                    mIsUnableToDrag = true;
-                }
-                if (mIsBeingDragged) {
-                    // Scroll to follow the motion event
-                    if (performDrag(x)) {
-                        ViewCompat.postInvalidateOnAnimation(this);
-                    }
-                }
                 break;
             }
 
